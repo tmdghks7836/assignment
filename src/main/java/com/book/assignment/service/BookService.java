@@ -21,18 +21,30 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    /**
+     * @return bookId
+     */
     @Transactional
-    public void create(BookCreationRequest bookCreationRequest) {
+    public long create(BookCreationRequest bookCreationRequest) {
 
         Book book = BookMapper.INSTANCE.dtoToEntity(bookCreationRequest);
 
         bookRepository.save(book);
+
+        return book.getId();
     }
 
     public Page<BookResponse> getList(Pageable pageable) {
         Page<Book> bookPage = bookRepository.findAll(pageable);
 
         return bookPage.map(book -> BookMapper.INSTANCE.entityToDto(book));
+    }
+
+    public BookResponse get(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() ->
+                new CustomRuntimeException(ErrorCode.RESOURCE_NOT_FOUND));
+
+        return BookMapper.INSTANCE.entityToDto(book);
     }
 
     @Transactional

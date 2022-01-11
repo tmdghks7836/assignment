@@ -2,6 +2,7 @@ package com.book.assignment.model.dto.book;
 
 import com.book.assignment.model.type.BookType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BookCreationRequest {
 
     private String name;

@@ -1,5 +1,6 @@
 package com.book.assignment.model.entity;
 
+import com.book.assignment.model.type.ContractStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+/**
+ * 계약 업체
+ *
+ * */
 @Entity
 @Table(name = "contractor")
 @Getter
@@ -25,8 +30,8 @@ public class Contractor {
     private Long id;
 
     //계약 일자
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "CONTRACT_DATE")
+    private LocalDateTime contractDate;
 
     // 최저가 비율
     @Column(name = "lowest_price_ratio")
@@ -34,8 +39,12 @@ public class Contractor {
 
     //상태 코드
     @Column(name = "status_code")
-    private String statusCode;
+    private ContractStatus statusCode;
 
-    public Contractor(Float lowestPriceRatio, String statusCode) {
+    public Contractor(Float lowestPriceRatio, LocalDateTime contractDate) {
+
+        this.statusCode = ContractStatus.PENDING;
+        this.lowestPriceRatio = lowestPriceRatio;
+        this.contractDate = contractDate;
     }
 }
