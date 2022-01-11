@@ -32,7 +32,7 @@ public class Supply {
 
     @CreatedDate
     @Column(name = "created_at")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
     private List<SupplyBookMap> supplyBookMaps;
