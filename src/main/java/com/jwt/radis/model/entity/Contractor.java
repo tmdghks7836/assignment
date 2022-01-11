@@ -3,7 +3,6 @@ package com.jwt.radis.model.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,26 +10,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "member")
+@Table(name = "contractor")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SupplyBook {
+public class Contractor {
 
+    //계약 번호
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", length = 50)
+    @Column(name = "contractor_id")
     private Long id;
 
-    @Column(name = "username", length = 50, unique = true)
-    private String username;
+    //계약 일자
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "password", length = 200)
-    private String password;
+    // 최저가 비율
+    @Column(name = "lowest_price_ratio")
+    private Float lowestPriceRatio;
 
-    public SupplyBook(String username, String password) {
-        this.username = username;
-        this.password = password;
+    //상태 코드
+    @Column(name = "status_code")
+    private String statusCode;
+
+    public Contractor(Float lowestPriceRatio, String statusCode) {
     }
 }

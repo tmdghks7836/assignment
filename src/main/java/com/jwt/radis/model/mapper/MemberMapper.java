@@ -1,7 +1,6 @@
 package com.jwt.radis.model.mapper;
 
-import com.jwt.radis.model.dto.MemberResponse;
-import com.jwt.radis.model.entity.SupplyBook;
+import com.jwt.radis.model.entity.SupplyBookMap;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
@@ -16,7 +15,7 @@ public interface MemberMapper {
     MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
 
 
-     MemberResponse modelToDto(SupplyBook supplyBook);
+    SupplyBookMap modelToDto(SupplyBookMap supplyBookMap);
 
 
 }

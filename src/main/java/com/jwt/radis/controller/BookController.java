@@ -1,6 +1,5 @@
 package com.jwt.radis.controller;
 
-import com.jwt.radis.service.MemberService;
 import com.jwt.radis.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class BookController {
 
     @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private MemberService memberService;
 
     @PostMapping
     public ResponseEntity create() {

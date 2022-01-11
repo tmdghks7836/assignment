@@ -6,25 +6,32 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "contract")
+@Table(name = "supply_book_map")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Contract {
+public class SupplyBookMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "contract_id")
+    @Column(name = "supply_book_map_id", length = 50)
     private Long id;
 
-    @Column(name = "contract", length = 50, unique = true)
-    private String contract;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Supply supply;
 
-    public Contract(String username, String password) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Book book;
+
+    public SupplyBookMap(Book book, Supply supply) {
+        this.book = book;
+        this.supply = supply;
     }
 }
