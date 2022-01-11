@@ -35,11 +35,11 @@ public class SwaggerConfig {
             .required(false)
             .build();
 
-        List<Parameter> globalParamters = new ArrayList<>();
-        globalParamters.add(parameterBuilder);
+        List<Parameter> globalParameters = new ArrayList<>();
+        globalParameters.add(parameterBuilder);
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .globalOperationParameters(globalParamters)
+                .globalOperationParameters(globalParameters)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.book.assignment"))
