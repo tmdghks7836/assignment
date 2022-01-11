@@ -4,21 +4,21 @@ import lombok.Getter;
 
 
 @Getter
-public class AssignmentRuntimeException extends RuntimeException {
+public class CustomRuntimeException extends RuntimeException {
 
     private ErrorCode errorCode;
 
     private String reason;
 
-    public AssignmentRuntimeException(Throwable t){
+    public CustomRuntimeException(Throwable t){
         super(t);
     }
 
-    public AssignmentRuntimeException(ErrorCode errorCode){
+    public CustomRuntimeException(ErrorCode errorCode){
         this.errorCode = errorCode;
     }
 
-    public AssignmentRuntimeException(ErrorCode errorCode, String reason){
+    public CustomRuntimeException(ErrorCode errorCode, String reason){
         this.errorCode = errorCode;
         this.reason = reason;
     }

@@ -20,8 +20,8 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
         handleException(ex, request);
     }
 
-    @ExceptionHandler(value = {AssignmentRuntimeException.class})
-    protected ResponseEntity<ErrorResponse> handleDataException(AssignmentRuntimeException e) {
+    @ExceptionHandler(value = {CustomRuntimeException.class})
+    protected ResponseEntity<ErrorResponse> handleDataException(CustomRuntimeException e) {
         e.printStackTrace();
         log.error("handleDataException throw Exception : {}", e.getErrorCode());
         return ErrorResponse.toResponseEntity(e.getErrorCode());
