@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 계약 업체
- *
- * */
+ */
 @Entity
 @Table(name = "contractor")
 @Getter
@@ -31,7 +30,7 @@ public class Contractor {
 
     //계약 일자
     @Column(name = "CONTRACT_DATE")
-    private LocalDateTime contractDate;
+    private LocalDateTime contractDateTime;
 
     // 최저가 비율
     @Column(name = "lowest_price_ratio")
@@ -41,10 +40,10 @@ public class Contractor {
     @Column(name = "status_code")
     private ContractStatus statusCode;
 
-    public Contractor(Float lowestPriceRatio, LocalDateTime contractDate) {
+    public Contractor(LocalDateTime contractDateTime, Float lowestPriceRatio, ContractStatus contractStatus) {
 
-        this.statusCode = ContractStatus.PENDING;
+        this.statusCode = contractStatus;
         this.lowestPriceRatio = lowestPriceRatio;
-        this.contractDate = contractDate;
+        this.contractDateTime = contractDateTime;
     }
 }
