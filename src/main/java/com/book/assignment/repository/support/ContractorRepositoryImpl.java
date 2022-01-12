@@ -2,6 +2,7 @@ package com.book.assignment.repository.support;//package com.jwt.radis.repositor
 
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.entity.QContractor;
+import com.book.assignment.model.entity.QSupply;
 import com.book.assignment.repository.ContractorRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,10 @@ public class ContractorRepositoryImpl extends QuerydslRepositorySupportBasic imp
 
     public Contractor findSupplyBooksByContractor(Long contractorId) {
 
-        Contractor contractor = getQueryFactory().selectFrom(QContractor.contractor)
+        Contractor contractor = getQueryFactory()
+                .selectFrom(QContractor.contractor)
                 .leftJoin(QContractor.contractor.supplies).fetchJoin()
+                .leftJoin(QContractor.contractor.supplies, QSupply.supply).fetchJoin()
                 .where(contractorIdEq(contractorId))
                 .fetchOne();
 

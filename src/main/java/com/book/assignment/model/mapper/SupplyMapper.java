@@ -1,10 +1,13 @@
 package com.book.assignment.model.mapper;
 
+import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
 import com.book.assignment.model.dto.supply.SupplyResponse;
+import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.entity.Supply;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -21,5 +24,12 @@ public interface SupplyMapper {
     @Mapping(ignore = true, target = "contractor")
     Supply dtoToEntity(SupplyCreationRequest supplyCreationRequest);
 
-    SupplyResponse entityToDto(Supply contractor);
+    @Mapping(source = "contractor", target = "contractor", qualifiedByName = "qualifiedContractor")
+    SupplyResponse entityToDto(Supply supply);
+
+    @Named("qualifiedContractor")
+    default ContractorResponse qualifiedThumbnail(Contractor contractor) {
+
+        return ContractorMapper.INSTANCE.entityToDto(contractor);
+    }
 }

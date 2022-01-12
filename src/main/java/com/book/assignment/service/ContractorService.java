@@ -1,19 +1,21 @@
 package com.book.assignment.service;
 
-import com.book.assignment.exception.CustomRuntimeException;
-import com.book.assignment.exception.ErrorCode;
 import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
+import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.mapper.ContractorMapper;
 import com.book.assignment.repository.ContractorRepository;
+import com.book.assignment.repository.SupplyBookMapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -63,10 +65,28 @@ public class ContractorService {
         return supplyService.create(contractor, supplyCreationRequest.getSupplyDateTime());
     }
 
+    public List<SupplyResponse> getSupplies(Long contractorId){
+
+        return supplyService.getList(contractorId);
+    }
+
+    //TODO
     public Contractor getSupplyBooks(Long contractorId) {
 
         Contractor contractor = contractorRepository.findSupplyBooksByContractor(contractorId);
 
         return contractor;
+    }
+
+    /**
+     * 계약업체 도서 공급
+     * */
+    @Transactional
+    public void supplyBooks(Long supplyId, List<Long> bookIds) {
+
+        bookIds.forEach(bookId -> {
+
+            supplyService.supplyBook(supplyId, bookId);
+        });
     }
 }

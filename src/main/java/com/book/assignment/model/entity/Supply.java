@@ -1,6 +1,7 @@
 package com.book.assignment.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class Supply {
     @Column(name = "supply_date_time")
     private LocalDateTime supplyDateTime;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
     private List<SupplyBookMap> supplyBookMaps;
 

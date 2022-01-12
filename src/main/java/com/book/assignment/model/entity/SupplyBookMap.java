@@ -1,5 +1,6 @@
 package com.book.assignment.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +25,14 @@ public class SupplyBookMap {
     @Column(name = "supply_book_map_id", length = 50)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Supply supply;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
 
-    public SupplyBookMap(Book book, Supply supply) {
+    public SupplyBookMap(Supply supply, Book book) {
         this.book = book;
         this.supply = supply;
     }
