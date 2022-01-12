@@ -5,6 +5,7 @@ import com.book.assignment.exception.ErrorCode;
 import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
+import com.book.assignment.model.dto.supply.SupplyCreationRequest;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.mapper.ContractorMapper;
 import com.book.assignment.repository.ContractorRepository;
@@ -20,6 +21,9 @@ public class ContractorService {
 
     @Autowired
     private ContractorRepository contractorRepository;
+
+    @Autowired
+    private SupplyService supplyService;
 
     /**
      * @return contractor id
@@ -45,5 +49,24 @@ public class ContractorService {
                 new ResourceNotFoundException());
 
         return ContractorMapper.INSTANCE.entityToDto(contractor);
+    }
+
+    /**
+     * @return created supply Id
+     */
+    @Transactional
+    public Long createSupply(Long contractorId, SupplyCreationRequest supplyCreationRequest) {
+
+        Contractor contractor = contractorRepository.findById(contractorId).orElseThrow(() ->
+                new ResourceNotFoundException());
+
+        return supplyService.create(contractor, supplyCreationRequest.getSupplyDateTime());
+    }
+
+    public Contractor getSupplyBooks(Long contractorId) {
+
+        Contractor contractor = contractorRepository.findSupplyBooksByContractor(contractorId);
+
+        return contractor;
     }
 }

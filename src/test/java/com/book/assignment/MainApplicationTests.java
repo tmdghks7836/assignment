@@ -41,7 +41,7 @@ class MainApplicationTests {
         assert bookResponse.getName().equals("이것은 책이다.");
 
         //계약업체
-        Contractor contractor = new Contractor(10f, LocalDateTime.now().plusDays(1));
+//        Contractor contractor = new Contractor(10f, LocalDateTime.now().plusDays(1));
 
     }
 

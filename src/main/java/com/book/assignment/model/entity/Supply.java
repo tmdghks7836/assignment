@@ -1,12 +1,20 @@
 package com.book.assignment.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,18 +34,21 @@ public class Supply {
 
     //공급 일자
     @Column(name = "supply_date_time")
-    private LocalDateTime dateTime;
+    private LocalDateTime supplyDateTime;
 
     @OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
     private List<SupplyBookMap> supplyBookMaps;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contractor_id")
     private Contractor contractor;
 
-    public Supply(Contractor contractor, LocalDateTime dateTime) {
+    public Supply(Contractor contractor, LocalDateTime supplyDateTime) {
 
         this.contractor = contractor;
-        this.dateTime = dateTime;
+        this.supplyDateTime = supplyDateTime;
     }
+
+
 }

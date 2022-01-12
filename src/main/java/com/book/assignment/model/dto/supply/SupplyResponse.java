@@ -15,7 +15,7 @@ public class SupplyResponse {
     private Long id;
 
     //공급 일자
-    private LocalDateTime dateTime;
+    private LocalDateTime supplyDateTime;
 
 //    private List<SupplyBookMap> supplyBookMaps;
 
