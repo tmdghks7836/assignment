@@ -2,43 +2,47 @@ package com.book.assignment.repository.support;//package com.jwt.radis.repositor
 
 import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.entity.Book;
-import com.book.assignment.model.entity.Contractor;
-import com.book.assignment.model.entity.QBook;
-import com.book.assignment.model.entity.QContractor;
-import com.book.assignment.model.entity.QSupply;
 import com.book.assignment.model.entity.QSupplyBookMap;
 import com.book.assignment.model.entity.SupplyBookMap;
 import com.book.assignment.model.mapper.BookMapper;
-import com.book.assignment.repository.ContractorRepositoryCustom;
-import com.book.assignment.repository.SupplyBookMapRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.book.assignment.model.entity.QContractor.contractor;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Repository
-public class SupplyBookRepositoryImpl extends QuerydslRepositorySupportBasic implements SupplyBookMapRepositoryCustom {
+public class SupplyBookMapRepositoryImpl extends QuerydslRepositorySupportBasic implements SupplyBookMapRepositoryCustom {
 
     private final QSupplyBookMap qSupplyBookMap = QSupplyBookMap.supplyBookMap;
 
-    public SupplyBookRepositoryImpl() {
+    public SupplyBookMapRepositoryImpl() {
         super(SupplyBookMap.class);
-
     }
 
     public List<BookResponse> findSupplyBooksByContractor(Long contractorId) {
 
         List<Book> books = getQueryFactory()
-                .select(QBook.book)
+                .selectDistinct(qSupplyBookMap.book)
                 .from(qSupplyBookMap)
                 .innerJoin(qSupplyBookMap.book)
                 .innerJoin(qSupplyBookMap.supply)
                 .innerJoin(qSupplyBookMap.supply.contractor)
-                .on(qSupplyBookMap.supply.contractor.id.eq(contractorId))
+                .where(contractorIdEq(contractorId))
+                .fetch();
+
+        return books.stream().map(book -> BookMapper.INSTANCE.entityToDto(book)).collect(Collectors.toList());
+    }
+
+    public List<BookResponse> findBooksByAuthor(String author) {
+
+        List<Book> books = getQueryFactory()
+                .selectDistinct(qSupplyBookMap.book)
+                .from(qSupplyBookMap)
+                .innerJoin(qSupplyBookMap.book)
+                .where(authorContains(author))
                 .fetch();
 
         return books.stream().map(book -> BookMapper.INSTANCE.entityToDto(book)).collect(Collectors.toList());
@@ -46,8 +50,10 @@ public class SupplyBookRepositoryImpl extends QuerydslRepositorySupportBasic imp
 
 
     private BooleanExpression contractorIdEq(Long contractorId) {
-        return isEmpty(contractorId) ? null : contractor.id.eq(contractorId);
+        return isEmpty(contractorId) ? null : qSupplyBookMap.supply.contractor.id.eq(contractorId);
     }
 
-
+    private BooleanExpression authorContains(String author) {
+        return isEmpty(author) ? null : qSupplyBookMap.book.author.containsIgnoreCase(author);
+    }
 }

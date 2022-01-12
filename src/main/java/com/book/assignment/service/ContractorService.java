@@ -1,6 +1,7 @@
 package com.book.assignment.service;
 
 import com.book.assignment.exception.ResourceNotFoundException;
+import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
@@ -70,12 +71,11 @@ public class ContractorService {
         return supplyService.getList(contractorId);
     }
 
-    //TODO
-    public Contractor getSupplyBooks(Long contractorId) {
+    public List<BookResponse> getSupplyBooks(Long contractorId) {
 
-        Contractor contractor = contractorRepository.findSupplyBooksByContractor(contractorId);
+        List<BookResponse> supplyBooks = supplyService.getSupplyBooks(contractorId);
 
-        return contractor;
+        return supplyBooks;
     }
 
     /**

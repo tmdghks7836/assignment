@@ -18,17 +18,17 @@ public class ContractorRepositoryImpl extends QuerydslRepositorySupportBasic imp
 
     }
 
-    public Contractor findSupplyBooksByContractor(Long contractorId) {
-
-        Contractor contractor = getQueryFactory()
-                .selectFrom(QContractor.contractor)
-                .leftJoin(QContractor.contractor.supplies).fetchJoin()
-                .leftJoin(QContractor.contractor.supplies, QSupply.supply).fetchJoin()
-                .where(contractorIdEq(contractorId))
-                .fetchOne();
-
-        return contractor;
-    }
+//    public Contractor findSupplyBooksByContractor(Long contractorId) {
+//
+//        Contractor contractor = getQueryFactory()
+//                .selectFrom(QContractor.contractor)
+//                .leftJoin(QContractor.contractor.supplies).fetchJoin()
+//                .leftJoin(QContractor.contractor.supplies, QSupply.supply).fetchJoin()
+//                .where(contractorIdEq(contractorId))
+//                .fetchOne();
+//
+//        return contractor;
+//    }
 
 
     private BooleanExpression contractorIdEq(Long contractorId) {

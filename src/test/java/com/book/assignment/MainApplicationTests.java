@@ -20,6 +20,15 @@ class MainApplicationTests {
     private BookService bookService;
 
     @Test
+    void random(){
+        for (int i = 0; i < 10; i++) {
+
+            int v = (int)(Math.random() * 9);
+            System.out.println("v = " + v);
+        }
+    }
+
+    @Test
     @Transactional
     void test1() {
 

@@ -22,7 +22,7 @@ public class SupplyBookMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "supply_book_map_id", length = 50)
+    @Column(name = "supply_book_map_id")
     private Long id;
 
     @JsonBackReference

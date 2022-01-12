@@ -7,4 +7,6 @@ import java.util.List;
 public interface SupplyBookMapRepositoryCustom {
 
     List<BookResponse> findSupplyBooksByContractor(Long contractorId);
+
+    List<BookResponse> findBooksByAuthor(String author);
 }

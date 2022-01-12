@@ -41,6 +41,4 @@ public class BookController {
 
         bookService.update(id, bookUpdateRequest);
     }
-
-
 }

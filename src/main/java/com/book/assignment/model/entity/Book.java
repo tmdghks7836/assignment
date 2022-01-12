@@ -60,6 +60,7 @@ public class Book {
 
     public Book(String name,
                 BookType bookType,
+                Long amount,
                 Long supplyPrice,
                 String author,
                 LocalDateTime issueDate,
@@ -68,6 +69,7 @@ public class Book {
 
         this.name = name;
         this.bookType = bookType;
+        this.amount = amount;
         this.supplyPrice = supplyPrice;
         this.author = author;
         this.issueDate = issueDate;

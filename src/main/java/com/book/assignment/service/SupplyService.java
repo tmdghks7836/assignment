@@ -1,6 +1,7 @@
 package com.book.assignment.service;
 
 import com.book.assignment.exception.ResourceNotFoundException;
+import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Book;
 import com.book.assignment.model.entity.Contractor;
@@ -20,6 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 업체 공급 관련 서비스
+ */
 @Service
 @Transactional(readOnly = true)
 public class SupplyService {
@@ -49,7 +53,7 @@ public class SupplyService {
         return supply.getId();
     }
 
-    public List<SupplyResponse> getList(Long contractorId){
+    public List<SupplyResponse> getList(Long contractorId) {
 
         Contractor contractor = contractorRepository.findById(contractorId).orElseThrow(() ->
                 new ResourceNotFoundException());
@@ -83,5 +87,19 @@ public class SupplyService {
         supplyBookMapRepository.save(supplyBookMap);
 
         return supplyBookMap.getId();
+    }
+
+    /**
+     * 업체별 공급된 도서 조회
+     * */
+    public List<BookResponse> getSupplyBooks(Long contractorId) {
+        return supplyBookMapRepository.findSupplyBooksByContractor(contractorId);
+    }
+
+    /**
+     * 공급된 도서 중 특정 저자가 쓴 도서를 조회
+     * */
+    public List<BookResponse> getSupplyBooksByAuthor(String author) {
+        return supplyBookMapRepository.findBooksByAuthor(author);
     }
 }
