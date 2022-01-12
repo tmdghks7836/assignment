@@ -2,6 +2,7 @@ package com.book.assignment.service;
 
 import com.book.assignment.exception.CustomRuntimeException;
 import com.book.assignment.exception.ErrorCode;
+import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.BookCreationRequest;
 import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.book.BookUpdateRequest;
@@ -42,7 +43,7 @@ public class BookService {
 
     public BookResponse get(Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() ->
-                new CustomRuntimeException(ErrorCode.RESOURCE_NOT_FOUND));
+                new ResourceNotFoundException());
 
         return BookMapper.INSTANCE.entityToDto(book);
     }
@@ -51,7 +52,7 @@ public class BookService {
     public void update(Long bookId, BookUpdateRequest bookUpdateRequest) {
 
         Book book = bookRepository.findById(bookId).orElseThrow(() ->
-                new CustomRuntimeException(ErrorCode.RESOURCE_NOT_FOUND));
+                new ResourceNotFoundException());
 
         book.update(bookUpdateRequest);
     }

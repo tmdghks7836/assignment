@@ -1,5 +1,8 @@
 package com.book.assignment.service;
 
+import com.book.assignment.exception.CustomRuntimeException;
+import com.book.assignment.exception.ErrorCode;
+import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
 import com.book.assignment.model.entity.Contractor;
@@ -36,20 +39,11 @@ public class ContractorService {
 
         return contractors.map(contractor -> ContractorMapper.INSTANCE.entityToDto(contractor));
     }
-//
-//    public BookResponse get(Long bookId) {
-//        Book book = bookRepository.findById(bookId).orElseThrow(() ->
-//                new CustomRuntimeException(ErrorCode.RESOURCE_NOT_FOUND));
-//
-//        return BookMapper.INSTANCE.entityToDto(book);
-//    }
-//
-//    @Transactional
-//    public void update(Long bookId, BookUpdateRequest bookUpdateRequest) {
-//
-//        Book book = bookRepository.findById(bookId).orElseThrow(() ->
-//                new CustomRuntimeException(ErrorCode.RESOURCE_NOT_FOUND));
-//
-//        book.update(bookUpdateRequest);
-//    }
+
+    public ContractorResponse get(Long contractorId) {
+        Contractor contractor = contractorRepository.findById(contractorId).orElseThrow(() ->
+                new ResourceNotFoundException());
+
+        return ContractorMapper.INSTANCE.entityToDto(contractor);
+    }
 }

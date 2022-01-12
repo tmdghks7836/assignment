@@ -35,9 +35,9 @@ public class Supply {
     @JoinColumn(name = "contractor_id")
     private Contractor contractor;
 
-    public Supply(Contractor contractor, LocalDateTime supplyDateTime) {
+    public Supply(Contractor contractor, LocalDateTime dateTime) {
 
         this.contractor = contractor;
-        this.dateTime = supplyDateTime;
+        this.dateTime = dateTime;
     }
 }

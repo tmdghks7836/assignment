@@ -1,5 +1,6 @@
 package com.book.assignment.config;
 
+import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
 import com.book.assignment.model.type.ContractStatus;
 import com.book.assignment.service.BookService;
@@ -26,13 +27,15 @@ public class InitDataConfig {
 
         for (int i = 0; i < 10; i++) {
 
-            contractorService.create(
+            long contractorId = contractorService.create(
                     ContractorCreationRequest.builder()
                             .contractDateTime(LocalDateTime.now().plusDays(i))
                             .lowestPriceRatio(1f * i)
                             .contractStatus(ContractStatus.values()[i % 3])
                             .build()
             );
+
+            ContractorResponse contractorResponse = contractorService.get(contractorId);
         }
 
     }

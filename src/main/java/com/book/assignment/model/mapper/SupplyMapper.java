@@ -2,7 +2,10 @@ package com.book.assignment.model.mapper;
 
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
+import com.book.assignment.model.dto.supply.SupplyCreationRequest;
+import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
+import com.book.assignment.model.entity.Supply;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
@@ -12,11 +15,11 @@ import org.mapstruct.factory.Mappers;
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT
 )
-public interface ContractorMapper {
+public interface SupplyMapper {
 
-    ContractorMapper INSTANCE = Mappers.getMapper(ContractorMapper.class);
+    SupplyMapper INSTANCE = Mappers.getMapper(SupplyMapper.class);
 
-    Contractor dtoToEntity(ContractorCreationRequest contractorCreationRequest);
+    Supply dtoToEntity(SupplyCreationRequest supplyCreationRequest);
 
-    ContractorResponse entityToDto(Contractor contractor);
+    SupplyResponse entityToDto(Supply contractor);
 }
