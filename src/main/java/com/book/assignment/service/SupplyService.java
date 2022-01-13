@@ -2,6 +2,7 @@ package com.book.assignment.service;
 
 import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.BookResponse;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
 import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Book;
 import com.book.assignment.model.entity.Contractor;
@@ -13,6 +14,8 @@ import com.book.assignment.repository.ContractorRepository;
 import com.book.assignment.repository.SupplyBookMapRepository;
 import com.book.assignment.repository.SupplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,14 +95,7 @@ public class SupplyService {
     /**
      * 업체별 공급된 도서 조회
      * */
-    public List<BookResponse> getSupplyBooks(Long contractorId) {
-        return supplyBookMapRepository.findSupplyBooksByContractor(contractorId);
-    }
-
-    /**
-     * 공급된 도서 중 특정 저자가 쓴 도서를 조회
-     * */
-    public List<BookResponse> getSupplyBooksByAuthor(String author) {
-        return supplyBookMapRepository.findBooksByAuthor(author);
+    public Page<BookResponse> getSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable) {
+        return supplyBookMapRepository.findSupplyBooks(condition, pageable);
     }
 }

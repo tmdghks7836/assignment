@@ -1,12 +1,11 @@
 package com.book.assignment.repository.support;
 
 import com.book.assignment.model.dto.book.BookResponse;
-
-import java.util.List;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SupplyBookMapRepositoryCustom {
 
-    List<BookResponse> findSupplyBooksByContractor(Long contractorId);
-
-    List<BookResponse> findBooksByAuthor(String author);
+    Page<BookResponse> findSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable);
 }

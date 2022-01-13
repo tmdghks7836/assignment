@@ -4,6 +4,7 @@ import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
 import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
@@ -66,21 +67,22 @@ public class ContractorService {
         return supplyService.create(contractor, supplyCreationRequest.getSupplyDateTime());
     }
 
-    public List<SupplyResponse> getSupplies(Long contractorId){
+    public List<SupplyResponse> getSupplies(Long contractorId) {
 
         return supplyService.getList(contractorId);
     }
 
-    public List<BookResponse> getSupplyBooks(Long contractorId) {
+    public Page<BookResponse> getSupplyBooks(SupplyBookSearchCondition condition,
+                                             Pageable pageable) {
 
-        List<BookResponse> supplyBooks = supplyService.getSupplyBooks(contractorId);
+        Page<BookResponse> supplyBooks = supplyService.getSupplyBooks(condition, pageable);
 
         return supplyBooks;
     }
 
     /**
      * 계약업체 도서 공급
-     * */
+     */
     @Transactional
     public void supplyBooks(Long supplyId, List<Long> bookIds) {
 
