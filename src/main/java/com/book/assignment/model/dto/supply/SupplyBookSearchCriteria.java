@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SupplyBookSearchCondition {
+public class SupplyBookSearchCriteria {
 
     private Long contractorId;
     private String author;

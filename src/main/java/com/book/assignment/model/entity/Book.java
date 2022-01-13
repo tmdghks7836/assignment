@@ -1,5 +1,6 @@
 package com.book.assignment.model.entity;
 
+import com.book.assignment.model.Product;
 import com.book.assignment.model.dto.book.BookUpdateRequest;
 import com.book.assignment.model.type.BookType;
 import lombok.AccessLevel;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "book")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Book {
+public class Book implements Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,9 +31,11 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    //도서 구분
+    //도서 타입
     @Column(name = "bookType")
     private BookType bookType;
+
+
 
     //수량
     @Column(name = "amount")

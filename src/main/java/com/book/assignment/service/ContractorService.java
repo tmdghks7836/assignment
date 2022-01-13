@@ -4,9 +4,9 @@ import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
-import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
+import com.book.assignment.model.dto.supply.SimpleSupplyResponse;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCriteria;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
-import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.mapper.ContractorMapper;
 import com.book.assignment.repository.ContractorRepository;
@@ -66,16 +66,16 @@ public class ContractorService {
         return supplyService.create(contractor, supplyCreationRequest.getSupplyDateTime());
     }
 
-    public List<SupplyResponse> getSupplies(Long contractorId) {
+    public List<SimpleSupplyResponse> getSupplies(Long contractorId) {
 
         return supplyService.getAllByContractorId(contractorId);
     }
 
-    public Page<BookResponse> getSupplyBooks(Long contractorId,
-                                             Pageable pageable) {
+    public Page<BookResponse> getSuppliedBooks(Long contractorId,
+                                               Pageable pageable) {
 
-        Page<BookResponse> supplyBooks = supplyService.getSupplyBooks(
-                SupplyBookSearchCondition.builder()
+        Page<BookResponse> supplyBooks = supplyService.getSuppliedBooks(
+                SupplyBookSearchCriteria.builder()
                         .contractorId(contractorId)
                         .build(),
                 pageable);

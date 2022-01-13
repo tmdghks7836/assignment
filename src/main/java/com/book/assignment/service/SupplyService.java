@@ -2,9 +2,9 @@ package com.book.assignment.service;
 
 import com.book.assignment.exception.ResourceNotFoundException;
 import com.book.assignment.model.dto.book.BookResponse;
-import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
+import com.book.assignment.model.dto.supply.SimpleSupplyResponse;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCriteria;
 import com.book.assignment.model.dto.supply.SupplyResponse;
-import com.book.assignment.model.dto.supply.SupplyWithBooksResponse;
 import com.book.assignment.model.entity.Book;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.entity.Supply;
@@ -15,6 +15,7 @@ import com.book.assignment.repository.BookRepository;
 import com.book.assignment.repository.ContractorRepository;
 import com.book.assignment.repository.SupplyBookMapRepository;
 import com.book.assignment.repository.SupplyRepository;
+import com.book.assignment.strategy.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +45,9 @@ public class SupplyService {
     @Autowired
     private ContractorRepository contractorRepository;
 
+    @Autowired
+    private DiscountStrategy bookDiscountStrategy;
+
     /**
      * @return supply id
      */
@@ -58,7 +61,7 @@ public class SupplyService {
         return supply.getId();
     }
 
-    public List<SupplyResponse> getAllByContractorId(Long contractorId) {
+    public List<SimpleSupplyResponse> getAllByContractorId(Long contractorId) {
 
         Contractor contractor = contractorRepository.findById(contractorId).orElseThrow(() ->
                 new ResourceNotFoundException());
@@ -66,7 +69,7 @@ public class SupplyService {
         List<Supply> supplies = supplyRepository.findAllByContractor(contractor);
 
         return supplies.stream()
-                .map(supply -> SupplyMapper.INSTANCE.entityToDto(supply)).collect(Collectors.toList());
+                .map(supply -> SupplyMapper.INSTANCE.entityToSimpleDto(supply)).collect(Collectors.toList());
     }
 
     /**
@@ -96,17 +99,25 @@ public class SupplyService {
     /**
      * 업체별 공급된 도서 조회
      */
-    public Page<BookResponse> getSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable) {
+    public Page<BookResponse> getSuppliedBooks(SupplyBookSearchCriteria condition, Pageable pageable) {
 
         Page<Book> bookPage = supplyBookMapRepository.findSupplyBooks(condition, pageable);
 
         return bookPage.map(book -> BookMapper.INSTANCE.entityToDto(book));
     }
 
-    public Page<SupplyWithBooksResponse> getAll(Pageable pageable){
+    public Page<SupplyResponse> getAll(Pageable pageable) {
 
-        Page<Supply> supplies = supplyBookMapRepository.findSupplies(pageable);
+        Page<Supply> supplies = supplyRepository.findAll(pageable);
 
-        return supplies.map(supply -> new SupplyWithBooksResponse(supply));
+        return supplies.map(supply -> new SupplyResponse(supply, bookDiscountStrategy));
+    }
+
+    public SupplyResponse get(Long supplyId) {
+
+        Supply supply = supplyRepository.findByIdWithFetchJoin(supplyId).orElseThrow(() ->
+                new ResourceNotFoundException());
+
+        return new SupplyResponse(supply, bookDiscountStrategy);
     }
 }

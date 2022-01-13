@@ -1,9 +1,8 @@
 package com.book.assignment.model.mapper;
 
-import com.book.assignment.model.dto.book.BookCreationRequest;
-import com.book.assignment.model.dto.book.BookResponse;
-import com.book.assignment.model.dto.book.BookUpdateRequest;
+import com.book.assignment.model.dto.book.*;
 import com.book.assignment.model.entity.Book;
+import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.utils.TimeUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -20,5 +19,8 @@ public interface BookMapper {
 
     Book dtoToEntity(BookCreationRequest bookCreationRequest);
 
+    @Mapping(target = "discountPrice", ignore = true)
     BookResponse entityToDto(Book book);
+
+    BookResponse entityToDto(Book book, Long discountPrice);
 }

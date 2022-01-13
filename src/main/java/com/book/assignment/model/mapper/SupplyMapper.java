@@ -2,6 +2,7 @@ package com.book.assignment.model.mapper;
 
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
+import com.book.assignment.model.dto.supply.SimpleSupplyResponse;
 import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.entity.Supply;
@@ -25,10 +26,10 @@ public interface SupplyMapper {
     Supply dtoToEntity(SupplyCreationRequest supplyCreationRequest);
 
     @Mapping(source = "contractor", target = "contractor", qualifiedByName = "qualifiedContractor")
-    SupplyResponse entityToDto(Supply supply);
+    SimpleSupplyResponse entityToSimpleDto(Supply supply);
 
     @Named("qualifiedContractor")
-    default ContractorResponse qualifiedThumbnail(Contractor contractor) {
+    default ContractorResponse qualifiedContractor(Contractor contractor) {
 
         return ContractorMapper.INSTANCE.entityToDto(contractor);
     }

@@ -22,8 +22,8 @@ import java.util.function.Function;
 
 public class QuerydslRepositorySupportBasic {
 
-    private final Class domainClass;
-    private Querydsl querydsl;
+    private final Class domainClass; //queryDsl 생성을 위해 선언
+    private Querydsl querydsl; //applyPagination 기능 구현을 위해 선언
     private EntityManager entityManager;
     private JPAQueryFactory queryFactory;
 

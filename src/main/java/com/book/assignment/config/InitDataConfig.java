@@ -5,7 +5,7 @@ import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.book.ContractorResponse;
 import com.book.assignment.model.dto.contractor.ContractorCreationRequest;
 import com.book.assignment.model.dto.supply.SupplyCreationRequest;
-import com.book.assignment.model.dto.supply.SupplyResponse;
+import com.book.assignment.model.dto.supply.SimpleSupplyResponse;
 import com.book.assignment.model.type.BookType;
 import com.book.assignment.model.type.ContractStatus;
 import com.book.assignment.service.BookService;
@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -46,7 +45,7 @@ public class InitDataConfig {
 
         contractors.stream().forEach(contractorResponse -> {
 
-            List<SupplyResponse> supplies = contractorService.getSupplies(contractorResponse.getId());
+            List<SimpleSupplyResponse> supplies = contractorService.getSupplies(contractorResponse.getId());
 
             supplies.stream().forEach(supplyResponse -> {
                 createSupplyBookMap(supplyResponse.getId());

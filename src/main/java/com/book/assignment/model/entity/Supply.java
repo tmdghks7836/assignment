@@ -51,6 +51,4 @@ public class Supply {
         this.contractor = contractor;
         this.supplyDateTime = supplyDateTime;
     }
-
-
 }

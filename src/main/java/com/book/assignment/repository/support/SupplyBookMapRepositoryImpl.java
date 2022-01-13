@@ -1,17 +1,14 @@
 package com.book.assignment.repository.support;//package com.jwt.radis.repository;
 
-import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
+import com.book.assignment.model.dto.supply.SupplyBookSearchCriteria;
 import com.book.assignment.model.entity.Book;
-import com.book.assignment.model.entity.QSupply;
 import com.book.assignment.model.entity.QSupplyBookMap;
-import com.book.assignment.model.entity.Supply;
 import com.book.assignment.model.entity.SupplyBookMap;
+import com.book.assignment.repository.support.custom.SupplyBookMapRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -24,7 +21,7 @@ public class SupplyBookMapRepositoryImpl extends QuerydslRepositorySupportBasic 
         super(SupplyBookMap.class);
     }
 
-    public Page<Book> findSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable) {
+    public Page<Book> findSupplyBooks(SupplyBookSearchCriteria condition, Pageable pageable) {
 
         Page<Book> bookPage = applyPagination(pageable, query ->
                 query
@@ -40,18 +37,6 @@ public class SupplyBookMapRepositoryImpl extends QuerydslRepositorySupportBasic 
 
 
         return bookPage;
-    }
-
-    public Page<Supply> findSupplies(Pageable pageable) {
-
-        Page<Supply> supplyPage = applyPagination(pageable, query ->
-                query
-                        .selectFrom(QSupply.supply)
-                        .innerJoin(QSupply.supply.supplyBookMaps, qSupplyBookMap)
-                        .innerJoin(qSupplyBookMap.book)
-                        .distinct());
-
-        return supplyPage;
     }
 
     private BooleanExpression contractorIdEq(Long contractorId) {
