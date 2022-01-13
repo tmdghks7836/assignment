@@ -10,7 +10,6 @@ import com.book.assignment.model.dto.supply.SupplyResponse;
 import com.book.assignment.model.entity.Contractor;
 import com.book.assignment.model.mapper.ContractorMapper;
 import com.book.assignment.repository.ContractorRepository;
-import com.book.assignment.repository.SupplyBookMapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,13 +68,17 @@ public class ContractorService {
 
     public List<SupplyResponse> getSupplies(Long contractorId) {
 
-        return supplyService.getList(contractorId);
+        return supplyService.getAllByContractorId(contractorId);
     }
 
-    public Page<BookResponse> getSupplyBooks(SupplyBookSearchCondition condition,
+    public Page<BookResponse> getSupplyBooks(Long contractorId,
                                              Pageable pageable) {
 
-        Page<BookResponse> supplyBooks = supplyService.getSupplyBooks(condition, pageable);
+        Page<BookResponse> supplyBooks = supplyService.getSupplyBooks(
+                SupplyBookSearchCondition.builder()
+                        .contractorId(contractorId)
+                        .build(),
+                pageable);
 
         return supplyBooks;
     }

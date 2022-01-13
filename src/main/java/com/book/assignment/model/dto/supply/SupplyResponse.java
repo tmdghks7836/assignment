@@ -17,7 +17,5 @@ public class SupplyResponse {
     //공급 일자
     private LocalDateTime supplyDateTime;
 
-//    private List<SupplyBookMap> supplyBookMaps;
-
     private ContractorResponse contractor;
 }

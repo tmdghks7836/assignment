@@ -86,8 +86,8 @@ public class InitDataConfig {
                     .discountRate(10f)
                     .issueDate(LocalDateTime.now())
                     .name(bookType.getDesc() + "책")
-                    .regularPrice((long)(Math.random()* 30000))
-                    .supplyPrice((long)(Math.random()* 30000))
+                    .regularPrice((long) (Math.random() * 30000))
+                    .supplyPrice((long) (Math.random() * 30000))
                     .build();
 
             long bookId = bookService.create(bookCreationRequest);
@@ -121,7 +121,17 @@ public class InitDataConfig {
         List<Long> bookIds = bookResponses.stream()
                 .map(bookResponse -> bookResponse.getId()).collect(Collectors.toList());
 
-        contractorService.supplyBooks(supplyId, bookIds);
+        List<Long> insertBookIds = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            Long index = bookIds.get((int) (Math.random() * bookIds.size()));
+
+            if (!insertBookIds.contains(index)) {
+                insertBookIds.add(index);
+            }
+        }
+
+
+        contractorService.supplyBooks(supplyId, insertBookIds);
     }
 
 

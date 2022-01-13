@@ -2,8 +2,10 @@ package com.book.assignment.controller;
 
 import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
+import com.book.assignment.model.dto.supply.SupplyWithBooksResponse;
 import com.book.assignment.service.ContractorService;
 import com.book.assignment.service.SupplyService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
+@Api(tags = "계약 업체, 공급 도서 API")
 @RestController
 @RequestMapping("/api/v1/contractors")
 public class ContractorController {
@@ -37,30 +38,36 @@ public class ContractorController {
 
     @GetMapping("/{contractorId}/supply-books")
     @ApiOperation(value = "계약 업체별 공급된 도서 조회")
-    public ResponseEntity get(@PathVariable Long contractorId,
-                              @PageableDefault Pageable pageable) {
+    public ResponseEntity getSupplyBooksByContractor(@PathVariable Long contractorId,
+                                                     @PageableDefault Pageable pageable) {
 
-        Page<BookResponse> supplyBooks = contractorService.getSupplyBooks(
-                SupplyBookSearchCondition.builder()
-                        .contractorId(contractorId)
-                        .build(),
-                pageable);
+        Page<BookResponse> supplyBooks = contractorService.getSupplyBooks(contractorId, pageable);
 
         return ResponseEntity.ok(supplyBooks);
     }
 
     @GetMapping("/supply-books")
     @ApiOperation(value = "공급된 도서 조회")
-    public ResponseEntity get(
+    public ResponseEntity getSupplyBooks(
             @RequestParam(value = "author", required = false) String author,
             @PageableDefault Pageable pageable) {
 
-        Page<BookResponse> supplyBooks = contractorService.getSupplyBooks(
+        Page<BookResponse> supplyBooks = supplyService.getSupplyBooks(
                 SupplyBookSearchCondition.builder()
                         .author(author)
                         .build(),
                 pageable);
 
         return ResponseEntity.ok(supplyBooks);
+    }
+
+    @GetMapping("/supplies")
+    @ApiOperation(value = "공급 도서 상세 조회(공급 내역, 도서 상세 내역 포함) ")
+    public ResponseEntity getSupplies(
+            @PageableDefault Pageable pageable) {
+
+        Page<SupplyWithBooksResponse> supplyBooksPage = supplyService.getAll(pageable);
+
+        return ResponseEntity.ok(supplyBooksPage);
     }
 }

@@ -1,18 +1,17 @@
 package com.book.assignment.repository.support;//package com.jwt.radis.repository;
 
-import com.book.assignment.model.dto.book.BookResponse;
 import com.book.assignment.model.dto.supply.SupplyBookSearchCondition;
 import com.book.assignment.model.entity.Book;
+import com.book.assignment.model.entity.QSupply;
 import com.book.assignment.model.entity.QSupplyBookMap;
+import com.book.assignment.model.entity.Supply;
 import com.book.assignment.model.entity.SupplyBookMap;
-import com.book.assignment.model.mapper.BookMapper;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -25,7 +24,7 @@ public class SupplyBookMapRepositoryImpl extends QuerydslRepositorySupportBasic 
         super(SupplyBookMap.class);
     }
 
-    public Page<BookResponse> findSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable) {
+    public Page<Book> findSupplyBooks(SupplyBookSearchCondition condition, Pageable pageable) {
 
         Page<Book> bookPage = applyPagination(pageable, query ->
                 query
@@ -40,7 +39,19 @@ public class SupplyBookMapRepositoryImpl extends QuerydslRepositorySupportBasic 
                         ));
 
 
-        return bookPage.map(book -> BookMapper.INSTANCE.entityToDto(book));
+        return bookPage;
+    }
+
+    public Page<Supply> findSupplies(Pageable pageable) {
+
+        Page<Supply> supplyPage = applyPagination(pageable, query ->
+                query
+                        .selectFrom(QSupply.supply)
+                        .innerJoin(QSupply.supply.supplyBookMaps, qSupplyBookMap)
+                        .innerJoin(qSupplyBookMap.book)
+                        .distinct());
+
+        return supplyPage;
     }
 
     private BooleanExpression contractorIdEq(Long contractorId) {
