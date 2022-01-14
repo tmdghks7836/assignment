@@ -1,9 +1,7 @@
 # 공급 도서 API
 
 ------------
-## info
-
-+ dependencies
+#  dependencies
   + lombok
   + jpa
   + spring-boot-starter-test
@@ -11,14 +9,27 @@
   + springfox-swagger
   + h2database
   + mapstruct
-  
-+ URL: localhost:8080
-
 ------------
 
-### [swagger API]
+# swagger API
 
 +  /swagger-ui.html
+
+## 계약 업체, 공급 도서 API
+### Contractor Controller
+
+  + GET /api/v1/contractors 업체 목록 조회
+  + GET /api/v1/contractors/{contractorId}/supplies/books 계약 업체별 공급된 도서 조회
+  + GET /api/v1/contractors/supplies 공급 도서 목록 조회(공급 내역, 도서 상세 내역 포함)
+  + GET /api/v1/contractors/supplies/{supplyId} 공급 도서 상세 조회(공급 내역, 도서 상세 내역 포함)
+  + GET /api/v1/contractors/supplies/books 공급된 도서 중 특정 저자가 쓴 도서를 조회
+
+## 기본 도서 API
+### Book Controller
+
+  + GET /api/v1/books 도서 조회
+  + POST /api/v1/books 도서 등록
+  + PUT /api/v1/books/{id} 도서 수정
 
 ------------
 
