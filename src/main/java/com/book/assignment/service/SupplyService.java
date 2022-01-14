@@ -15,6 +15,8 @@ import com.book.assignment.repository.BookRepository;
 import com.book.assignment.repository.ContractorRepository;
 import com.book.assignment.repository.SupplyBookMapRepository;
 import com.book.assignment.repository.SupplyRepository;
+import com.book.assignment.strategy.BookDiscountStrategy;
+import com.book.assignment.strategy.BookSalesStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,12 @@ public class SupplyService {
 
     @Autowired
     private ContractorRepository contractorRepository;
+
+    @Autowired
+    private BookDiscountStrategy bookDiscountStrategy;
+
+    @Autowired
+    private BookSalesStrategy bookSalesStrategy;
 
     /**
      * @return supply id
@@ -106,7 +114,7 @@ public class SupplyService {
 
         Page<Supply> supplies = supplyRepository.findAll(pageable);
 
-        return supplies.map(supply -> new SupplyResponse(supply));
+        return supplies.map(supply -> new SupplyResponse(supply, bookDiscountStrategy, bookSalesStrategy));
     }
 
     public SupplyResponse get(Long supplyId) {
@@ -114,6 +122,6 @@ public class SupplyService {
         Supply supply = supplyRepository.findByIdWithFetchJoin(supplyId).orElseThrow(() ->
                 new ResourceNotFoundException());
 
-        return new SupplyResponse(supply);
+        return new SupplyResponse(supply, bookDiscountStrategy, bookSalesStrategy);
     }
 }

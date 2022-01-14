@@ -27,10 +27,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.querydsl:querydsl-jpa'
     // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
