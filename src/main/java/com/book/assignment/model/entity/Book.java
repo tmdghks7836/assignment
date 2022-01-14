@@ -3,6 +3,10 @@ package com.book.assignment.model.entity;
 import com.book.assignment.model.Product;
 import com.book.assignment.model.dto.book.BookUpdateRequest;
 import com.book.assignment.model.type.BookType;
+import com.book.assignment.model.type.SalesStatus;
+import com.book.assignment.strategy.BookDiscountStrategy;
+import com.book.assignment.strategy.BookSalesStrategy;
+import com.book.assignment.utils.BeanUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +38,6 @@ public class Book implements Product {
     //도서 타입
     @Column(name = "bookType")
     private BookType bookType;
-
 
 
     //수량
@@ -89,5 +92,17 @@ public class Book implements Product {
         this.issueDate = bookUpdateRequest.getIssueDate();
         this.regularPrice = bookUpdateRequest.getRegularPrice();
         this.discountRate = bookUpdateRequest.getDiscountRate();
+    }
+
+    public Long getDiscountPrice() {
+
+        BookDiscountStrategy discountStrategy = BeanUtils.getBean(BookDiscountStrategy.class);
+        return discountStrategy.calculation(this);
+    }
+
+    public SalesStatus getSalesStatus() {
+
+        BookSalesStrategy bookSalesStrategy = BeanUtils.getBean(BookSalesStrategy.class);
+        return bookSalesStrategy.getSalesStatus(this);
     }
 }

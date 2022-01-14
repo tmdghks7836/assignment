@@ -2,7 +2,7 @@ package com.book.assignment.strategy;
 
 import com.book.assignment.model.Product;
 
-public class BookDiscountStrategyImpl implements DiscountStrategy {
+public class BookDiscountStrategyImpl implements BookDiscountStrategy {
 
     @Override
     public long calculation(Product product) {

@@ -5,7 +5,7 @@ import com.book.assignment.model.Product;
 /**
  * 도서 할인 관련 Strategy
  * */
-public interface DiscountStrategy {
+public interface BookDiscountStrategy {
 
     long calculation(Product product);
 }

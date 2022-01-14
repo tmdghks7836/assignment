@@ -78,12 +78,13 @@ public class InitDataConfig {
         AtomicInteger num = new AtomicInteger();
         bookResponses = Arrays.stream(BookType.values()).map(bookType -> {
 
+            int numAndIncrement = num.getAndIncrement();
             BookCreationRequest bookCreationRequest = BookCreationRequest.builder()
                     .amount(10000l)
-                    .author("이승환" + num.getAndIncrement())
+                    .author("이승환" + numAndIncrement)
                     .bookType(bookType)
                     .discountRate(10f)
-                    .issueDate(LocalDateTime.now())
+                    .issueDate(LocalDateTime.now().withYear(2015 + numAndIncrement))
                     .name(bookType.getDesc() + "책")
                     .regularPrice((long) (Math.random() * 30000))
                     .supplyPrice((long) (Math.random() * 30000))

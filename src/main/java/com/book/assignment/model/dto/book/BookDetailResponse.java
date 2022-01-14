@@ -3,9 +3,7 @@ package com.book.assignment.model.dto.book;
 import com.book.assignment.model.Product;
 import com.book.assignment.model.type.BookType;
 import com.book.assignment.model.type.SalesStatus;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookResponse implements Product {
+public class BookDetailResponse implements Product {
 
     private Long id;
 
@@ -40,4 +38,8 @@ public class BookResponse implements Product {
 
     //적용할인율
     private Float discountRate;
+
+    private Long discountPrice;
+
+    private SalesStatus salesStatus;
 }

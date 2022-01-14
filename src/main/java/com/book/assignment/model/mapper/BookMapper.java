@@ -19,8 +19,7 @@ public interface BookMapper {
 
     Book dtoToEntity(BookCreationRequest bookCreationRequest);
 
-    @Mapping(target = "discountPrice", ignore = true)
     BookResponse entityToDto(Book book);
 
-    BookResponse entityToDto(Book book, Long discountPrice);
+    BookDetailResponse entityToDetailDto(Book book);
 }
